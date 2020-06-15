@@ -4,13 +4,13 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-type Test struct {
+type Example struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec TestSpec `json:"spec,omitempty"`
+	Spec ExampleSpec `json:"spec,omitempty"`
 }
 
-type TestSpec struct {
+type ExampleSpec struct {
 	DisplayName string `json:"displayName"`
 }

@@ -82,7 +82,7 @@ type Interface interface {
 	RKEK8sSystemImagesGetter
 	RKEK8sServiceOptionsGetter
 	RKEAddonsGetter
-	TestsGetter
+	ExamplesGetter
 }
 
 type Clients struct {
@@ -150,7 +150,7 @@ type Clients struct {
 	RKEK8sSystemImage                       RKEK8sSystemImageClient
 	RKEK8sServiceOption                     RKEK8sServiceOptionClient
 	RKEAddon                                RKEAddonClient
-	Test                                    TestClient
+	Example                                 ExampleClient
 }
 
 type Client struct {
@@ -220,7 +220,7 @@ type Client struct {
 	rkeK8sSystemImageControllers                       map[string]RKEK8sSystemImageController
 	rkeK8sServiceOptionControllers                     map[string]RKEK8sServiceOptionController
 	rkeAddonControllers                                map[string]RKEAddonController
-	testControllers                                    map[string]TestController
+	exampleControllers                                 map[string]ExampleController
 }
 
 func Factory(ctx context.Context, config rest.Config) (context.Context, controller.Starter, error) {
@@ -442,8 +442,8 @@ func NewClientsFromInterface(iface Interface) *Clients {
 		RKEAddon: &rkeAddonClient2{
 			iface: iface.RKEAddons(""),
 		},
-		Test: &testClient2{
-			iface: iface.Tests(""),
+		Example: &exampleClient2{
+			iface: iface.Examples(""),
 		},
 	}
 }
@@ -523,7 +523,7 @@ func NewForConfig(config rest.Config) (Interface, error) {
 		rkeK8sSystemImageControllers:                       map[string]RKEK8sSystemImageController{},
 		rkeK8sServiceOptionControllers:                     map[string]RKEK8sServiceOptionController{},
 		rkeAddonControllers:                                map[string]RKEAddonController{},
-		testControllers:                                    map[string]TestController{},
+		exampleControllers:                                 map[string]ExampleController{},
 	}, nil
 }
 
@@ -1345,13 +1345,13 @@ func (c *Client) RKEAddons(namespace string) RKEAddonInterface {
 	}
 }
 
-type TestsGetter interface {
-	Tests(namespace string) TestInterface
+type ExamplesGetter interface {
+	Examples(namespace string) ExampleInterface
 }
 
-func (c *Client) Tests(namespace string) TestInterface {
-	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &TestResource, TestGroupVersionKind, testFactory{})
-	return &testClient{
+func (c *Client) Examples(namespace string) ExampleInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ExampleResource, ExampleGroupVersionKind, exampleFactory{})
+	return &exampleClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,

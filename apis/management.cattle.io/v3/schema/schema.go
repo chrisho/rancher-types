@@ -48,7 +48,7 @@ var (
 		Init(clusterTemplateTypes).
 		Init(driverMetadataTypes).
 		Init(encryptionTypes).
-		Init(testTypes)
+		Init(exampleTypes)
 
 	TokenSchemas = factory.Schemas(&Version).
 			Init(tokens)
@@ -923,6 +923,6 @@ func encryptionTypes(schemas *types.Schemas) *types.Schemas {
 	}{})
 }
 
-func testTypes(schemes *types.Schemas) *types.Schemas {
-	return schemes.MustImport(&Version, v3.Test{})
+func exampleTypes(schemes *types.Schemas) *types.Schemas {
+	return schemes.MustImport(&Version, v3.Example{})
 }
